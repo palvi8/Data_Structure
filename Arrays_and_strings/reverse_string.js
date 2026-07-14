@@ -6,8 +6,6 @@
 
 // Note that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.
 
- 
-
 // Example 1:
 
 // Input: s = "the sky is blue"
@@ -22,25 +20,40 @@
 // Input: s = "a good   example"
 // Output: "example good a"
 // Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
- 
 
 // Constraints:
 
 // 1 <= s.length <= 104
 // s contains English letters (upper-case and lower-case), digits, and spaces ' '.
 // There is at least one word in s.
- 
 
 // Follow-up: If the string data type is mutable in your language, can you solve it in-place with O(1) extra space?
 /**
  * @param {string} s
  * @return {string}
  */
-var reverseWords = function(s) {
-    let splitString = s.split(" ");
-    splitString = splitString.reverse().filter((n) => n).join(" ");
-    return splitString;
+var reverseWords = function (s) {
+  let left = s.length - 1;
+  let right = s.length - 1;
+  const words = [];
+
+  while (left >= 0) {
+    while (left >= 0 && s[left] === " ") {
+      left--;
+    }
+
+    right = left;
+
+    while (left >= 0 && s[left] !== " ") {
+      left--;
+    }
+
+    words.push(s.slice(left + 1, right + 1));
+  }
+
+  return words.join(" ");
 };
-console.log(reverseWords("the sky is blue")); // Output: "blue is sky the"
-console.log(reverseWords("  hello world  ")); // Output: "world hello"
-console.log(reverseWords("a good   example")); // Output: "example good a"
+
+console.log(reverseWords("the sky is blue")); // "blue is sky the"
+console.log(reverseWords("  hello world  ")); // "world hello"
+console.log(reverseWords("a good   example")); // "example good a"
